@@ -37,7 +37,7 @@ import (
 
 
 
-
+// reads a given config file
 func ReadConfigFile(filename string) (browsercommand string, port string, pass string, ip string) {
 
 	// set defaults
@@ -53,11 +53,11 @@ func ReadConfigFile(filename string) (browsercommand string, port string, pass s
 		return
 	}
 	
-
+  // ToDo: close file
 	reader := bufio.NewReader(file)
-	//defer reader.Close()
 
 	for {
+    // get a string from the next line; leave loop on eof
 		part,_,err := reader.ReadLine()
 		if err != nil {
 			break
@@ -66,16 +66,21 @@ func ReadConfigFile(filename string) (browsercommand string, port string, pass s
 		buffer.Write(part)
 		s := strings.ToLower(buffer.String())
 		
+    // remove everything after a #
 		if pos := strings.Index(s,"#"); pos != -1 {
 			s = s[:pos]
 		}
 		
+    // if there is no = in this line, assume this is a comment, and skip.
 		if pos := strings.Index(s,"="); pos != -1 {
+      // split the line to 2 strings, on the first =
 			arr := strings.SplitN(s,"=",2)
+      
+      //TrimSpace: allow some spaces before and after the = or at beginning/end of the line
 			key := strings.TrimSpace(arr[0])
-
 			val := strings.TrimSpace(s[pos+1:])
 			
+      // find out which key is given, and set its value
 			switch key {
 				case "browsercommand": browsercommand = val
 				case "ip": ip = val
@@ -85,18 +90,20 @@ func ReadConfigFile(filename string) (browsercommand string, port string, pass s
 			}
 		}
 	}
+  // get default browser, replace %b with it.
 	browsercommand = strings.Replace(browsercommand,"%b",os.Getenv("BROWSER"),-1)
 	return
 }
 
 
+// determinates from where to read the config file, and then reads it
 func ReadPropertiesFile() (browsercommand string, port string, pass string, ip string) {
-	conffile_etc,conffile_home := paths.GetConfFilenames()
+	conffile_etc,conffile_home := paths.GetConfFilenames() // get paths
 	
 	// Try to open the file in the user home. If that had success (means: file exists), then must be f!=nil and err==nil
 	f,err := os.OpenFile(conffile_home,os.O_RDONLY,0)
 
-	// Read out from the needed ConfFile.
+	// Read out from the needed ConfFile. (success in last command: from home, on failure: from /etc/browserbridge/
 	if (f != nil) && (err == nil) {
 		os.Stdout.WriteString("Reading config from" + conffile_home + "\n")
                 browsercommand,port,pass,ip = ReadConfigFile(conffile_home)
