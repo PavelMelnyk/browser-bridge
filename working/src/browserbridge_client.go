@@ -27,6 +27,7 @@ import (
 )
 
 
+// get the URL from execution parameters
 func GetURL() (url string) {
 	flag.Parse()
 	s := ""
@@ -43,9 +44,11 @@ func GetURL() (url string) {
 
 
 
-
+// Send any text to given ip and port through TCP:
 func Sendtext(ip string, port string, text string) (err int) {
-	_,e := strconv.Atoi(port)
+	_,e := strconv.Atoi(port) // Atoi: StrToInt
+   
+  // Get a connection (get TCPAddr and dial) 
 	targ := ip + ":" + port
 	raddr,e := net.ResolveTCPAddr("tcp",targ)
 	if e != nil {
@@ -57,15 +60,17 @@ func Sendtext(ip string, port string, text string) (err int) {
 		os.Stdout.WriteString(e.String()+"\n")
 		return 1
 	}
-
+  
+  // Send text:
 	conn.Write([]byte(text))
 
+  // wait for server answer (ack or nak), then close the connection
 	mess := make([]byte,1024)
 	conn.Read(mess)
 	message := string(mess)
-
 	conn.Close()
 
+  // anser was 'ack' or 'nak'. Check if it was ack
 	if message[0] == 'a' {
 		return 0
 	} else {
@@ -85,15 +90,18 @@ func main() {
 	url := GetURL()
 	os.Stdout.WriteString(url + "\n\n")
 
+  // read program config
 	_, port, pass, ip := browserbridge_config.ReadPropertiesFile()
 
 	os.Stdout.WriteString("sending this url to " + ip + ":" + port + "\n")
-	message := url + "\n" + pass + "\n"
+	message := url + "\n" + pass + "\n" // network message convention between server and client to send url: "url\npassword\n"
 
 	os.Stdout.WriteString("\nsending... ")
 
+  // Send the message
 	e := Sendtext(ip, port, message)
 
+  // check if sending was successful, and report this.
 	if e != 0 {
 		os.Stdout.WriteString("ERROR\n")
 		os.Exit(e);
