@@ -9,6 +9,7 @@ arch=('any')
 url="http://code.google.com/p/browser-bridge/"
 license=('GPL')
 options=(!strip)
+backup=(etc/browserbridge/browserbridge.conf)
 source=(http://browser-bridge.googlecode.com/files/browserbridge_v0.1_source.tar.gz paths.patch)
 md5sums=(05718bfb81de6def44eb5c7f3aeb4570 d5d4ca2546e2491a30112302e23564ef)
 
