@@ -98,10 +98,10 @@ func ReadPropertiesFile() (browsercommand string, port string, pass string, ip s
 
 	// Read out from the needed ConfFile.
 	if (f != nil) && (err == nil) {
-		os.Stdout.WriteString("Reading config from home.\n")
+		os.Stdout.WriteString("Reading config from" + conffile_home + "\n")
                 browsercommand,port,pass,ip = ReadConfigFile(conffile_home)
         } else {
-                os.Stdout.WriteString("Reading config from /etc.\n")
+                os.Stdout.WriteString("Reading config from" + conffile_etc + "\n")
                 browsercommand,port,pass,ip = ReadConfigFile(conffile_etc)
         }
 	
