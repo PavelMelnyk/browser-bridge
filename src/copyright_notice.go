@@ -20,7 +20,7 @@ package copyright_notice
 import "os"
 
 const (
-	website = "http://dl.dropbox.com/u/8192972/browser-bridge/index.html#build"
+	website = "http://code.google.com/p/browser-bridge/"
 	copyright_str = "browser-bridge   Copyright (C)  2011  Tim Gerhard\nThis program comes with ABSOLUTELY NO WARRANTY; for details see "
 	redist_info = "\nThis is free software, and you are welcome to redistribute it"
 )
