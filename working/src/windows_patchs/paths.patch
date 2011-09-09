@@ -5,7 +5,7 @@
   import "os"
   
   func GetConfFilenames() (conffile_etc string, conffile_home string) {
-!         conffile_etc = "/etc/browserbridge.conf"
+!         conffile_etc = "/etc/browserbridge/browserbridge.conf"
 !         conffile_home = os.Getenv("HOME") + "/.browserbridge.conf"
   	return
   }
