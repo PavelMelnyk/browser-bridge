@@ -45,11 +45,16 @@ func ReadConfigFile(filename string) (browsercommand string, port string, pass s
 	port = "7896"
 	pass = "hallo"
 	ip = "127.0.0.1"
+	// get default browser
+	browser_replacement := os.Getenv("BROWSER")
+	
 
 	// open file
 	file, err := os.Open(filename)
 	if err != nil {
-		os.Stdout.WriteString("Error opening config file. proceeding with standard config...")
+		os.Stdout.WriteString("Error opening config file. proceeding with standard config...\n")
+		// replace %b with default browser.
+		browsercommand = strings.Replace(browsercommand,"%b",browser_replacement,-1)
 		return
 	}
 	
@@ -90,8 +95,8 @@ func ReadConfigFile(filename string) (browsercommand string, port string, pass s
 			}
 		}
 	}
-  // get default browser, replace %b with it.
-	browsercommand = strings.Replace(browsercommand,"%b",os.Getenv("BROWSER"),-1)
+	// replace %b with default browser.
+	browsercommand = strings.Replace(browsercommand,"%b",browser_replacement,-1)
 	return
 }
 

@@ -1,19 +1,4 @@
-*** browserbridge_config.go	2011-09-09 10:16:04.000000000 +0200
---- browserbridge_config.win	2011-09-09 17:44:13.565327554 +0200
-***************
-*** 91,97 ****
-  		}
-  	}
-    // get default browser, replace %b with it.
-! 	browsercommand = strings.Replace(browsercommand,"%b",os.Getenv("BROWSER"),-1)
-  	return
-  }
-  
---- 91,97 ----
-  		}
-  	}
-    // get default browser, replace %b with it.
-! 	browsercommand = strings.Replace(browsercommand,"%b","explorer.exe",-1)
-  	return
-  }
-  
+49c49
+< 	browser_replacement := os.Getenv("BROWSER")
+---
+> 	browser_replacement := "explorer.exe"
