@@ -15,27 +15,14 @@ md5sums=(05718bfb81de6def44eb5c7f3aeb4570 d5d4ca2546e2491a30112302e23564ef)
 
 build() {
 	cd $srcdir/browserbridge
-
-	# this patch allows to put the config file to /etc/browserbridge/browserbridge.conf instead of /etc/browserbridge.conf
-	patch src/paths.go -i ../paths.patch -o ./paths.go
-	
-	# compile
-	8g src/copyright_notice.go
-	8g ./paths.go
-	8g src/browserbridge_config.go
-	8g src/browserbridge_client.go
-	8g src/browserbridge_server.go
-
-	# create dest dir
-	mkdir -p ${pkgdir}/usr/bin
-
-	# link
-	8l -o ${pkgdir}/usr/bin/browser-bridge browserbridge_client.8
-	8l -o ${pkgdir}/usr/bin/browser-bridge_server browserbridge_server.8
+	bash ./build_all.sh
 }
 
 package() {
 	cd $srcdir/browserbridge
 	mkdir -p ${pkgdir}/etc/browserbridge/
+	mkdir -p ${pkgdir}/usr/bin
 	install -m644 browserbridge.conf ${pkgdir}/etc/browserbridge/
+	install -m755 browser-bridge ${pkgdir}/usr/bin/
+	install -m755 browser-bridge_server ${pkgdir}/usr/bin/
 }
