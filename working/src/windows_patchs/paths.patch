@@ -1,7 +1,7 @@
-*** paths.go	2011-08-30 20:27:33.000000000 +0200
---- paths.windows	2011-09-06 13:39:34.564484976 +0200
+*** paths.go	2011-09-11 09:29:34.303683012 +0200
+--- paths.win	2011-09-11 09:30:27.037199764 +0200
 ***************
-*** 3,9 ****
+*** 20,26 ****
   import "os"
   
   func GetConfFilenames() (conffile_etc string, conffile_home string) {
@@ -9,11 +9,11 @@
 !         conffile_home = os.Getenv("HOME") + "/.browserbridge.conf"
   	return
   }
---- 3,9 ----
+--- 20,26 ----
   import "os"
   
   func GetConfFilenames() (conffile_etc string, conffile_home string) {
-!         conffile_etc = ".\browserbridge.conf"
+!         conffile_etc = "C:\browserbridge.conf"
 !         conffile_home = os.Getenv("APPDATA") + "\browserbridge.conf"
   	return
   }
