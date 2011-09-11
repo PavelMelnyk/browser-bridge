@@ -65,21 +65,21 @@ func ReadConfigFile(filename string) (browsercommand string, port string, pass s
 		buffer := bytes.NewBuffer(make([]byte,0,2048))
 		buffer.Write(part)
 		s := strings.ToLower(buffer.String())
-		
+
     // remove everything after a #
 		if pos := strings.Index(s,"#"); pos != -1 {
 			s = s[:pos]
 		}
-		
+
     // if there is no = in this line, assume this is a comment, and skip.
 		if pos := strings.Index(s,"="); pos != -1 {
       // split the line to 2 strings, on the first =
 			arr := strings.SplitN(s,"=",2)
-      
+
       //TrimSpace: allow some spaces before and after the = or at beginning/end of the line
 			key := strings.TrimSpace(arr[0])
 			val := strings.TrimSpace(s[pos+1:])
-			
+
       // find out which key is given, and set its value
 			switch key {
 				case "browsercommand": browsercommand = val
@@ -99,19 +99,19 @@ func ReadConfigFile(filename string) (browsercommand string, port string, pass s
 // determinates from where to read the config file, and then reads it
 func ReadPropertiesFile() (browsercommand string, port string, pass string, ip string) {
 	conffile_etc,conffile_home := paths.GetConfFilenames() // get paths
-	
+
 	// Try to open the file in the user home. If that had success (means: file exists), then must be f!=nil and err==nil
 	f,err := os.OpenFile(conffile_home,os.O_RDONLY,0)
 
 	// Read out from the needed ConfFile. (success in last command: from home, on failure: from /etc/browserbridge/
 	if (f != nil) && (err == nil) {
-		os.Stdout.WriteString("Reading config from" + conffile_home + "\n")
+		os.Stdout.WriteString("Reading config from " + conffile_home + "\n")
                 browsercommand,port,pass,ip = ReadConfigFile(conffile_home)
         } else {
-                os.Stdout.WriteString("Reading config from" + conffile_etc + "\n")
+                os.Stdout.WriteString("Reading config from " + conffile_etc + "\n")
                 browsercommand,port,pass,ip = ReadConfigFile(conffile_etc)
         }
-	
+
 	// return all
 	return
 }
