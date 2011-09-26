@@ -1,6 +1,6 @@
 # Maintainer: Tim Gerhard <tim-gerhard@schnellbach-beltheim.de>
 pkgname=browser-bridge
-pkgver=0.1
+pkgver=0.1.1
 pkgrel=1
 depends=()
 makedepends=('go')
@@ -10,8 +10,8 @@ url="http://code.google.com/p/browser-bridge/"
 license=('GPL')
 options=(!strip)
 backup=(etc/browserbridge/browserbridge.conf)
-source=(http://browser-bridge.googlecode.com/files/browserbridge_v0.1_source.tar.gz paths.patch)
-md5sums=(05718bfb81de6def44eb5c7f3aeb4570 d5d4ca2546e2491a30112302e23564ef)
+source=(http://browser-bridge.googlecode.com/files/browserbridge_v0.1.1_source.tar.gz)
+md5sums=(c6ed436e7fcba6e42fa0aebe3cfe163e)
 
 build() {
 	cd $srcdir/browserbridge
