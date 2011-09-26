@@ -1,0 +1,4 @@
+49c49
+< 	browser_replacement := os.Getenv("BROWSER")
+---
+> 	browser_replacement := "explorer.exe"
